@@ -8,6 +8,7 @@ on:
     paths:
       - '*.tf'
       - '*.tfvars'
+  # workflow_call:
   workflow_dispatch:
     inputs:
       target_branch:
