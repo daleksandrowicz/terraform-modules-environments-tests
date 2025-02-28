@@ -24,7 +24,7 @@ jobs:
     uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_sec.yml@feature/main
 
   plan:
-    needs: [validate, lint, security]
+    needs: [lint, security]
     uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_plan.yml@feature/main
     permissions:
       pull-requests: write
