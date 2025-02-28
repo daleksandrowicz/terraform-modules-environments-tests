@@ -8,13 +8,13 @@ on:
     paths:
       - '*.tf'
       - '*.tfvars'
-  workflow_call:
-  # workflow_dispatch:
-  #   inputs:
-  #     target_branch:
-  #       description: 'Target branch (for manual run)'
-  #       required: true
-  #       default: 'dev'
+  # workflow_call:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Target branch (for manual run)'
+        required: true
+        default: 'dev'
 
 jobs:
   lint:
