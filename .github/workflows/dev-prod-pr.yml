@@ -1,14 +1,14 @@
 name: Dev and Prod branches PR checks
 
 on:
-  pull_request:
-    branches:
-      - dev
-      - prod
-    paths:
-      - '*.tf'
-      - '*.tfvars'
-  # workflow_call:
+  # pull_request:
+  #   branches:
+  #     - dev
+  #     - prod
+  #   paths:
+  #     - '*.tf'
+  #     - '*.tfvars'
+  workflow_call:
   workflow_dispatch:
     inputs:
       target_branch:

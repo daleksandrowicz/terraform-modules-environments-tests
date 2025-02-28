@@ -1,19 +1,20 @@
 name: Dev Branch Apply
 
 on:
-  push:
-    branches:
-      - dev
-      - prod
-    paths:
-      - '*.tf'
-      - '*.tfvars'
-  # workflow_dispatch:
-  #   inputs:
-  #     target_branch:
-  #       description: 'Target branch (for manual run)'
-  #       required: true
-  #       default: 'dev'
+  # push:
+  #   branches:
+  #     - dev
+  #     - prod
+  #   paths:
+  #     - '*.tf'
+  #     - '*.tfvars'
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Target branch (for manual run)'
+        required: true
+        default: 'dev'
 
 jobs:
   apply:
