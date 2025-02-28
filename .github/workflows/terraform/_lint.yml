@@ -1,0 +1,26 @@
+name: Terraform Lint
+
+on:
+  workflow_call:
+
+env:
+  TFLINT_VERSION: "v0.55.1"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: {{ env.TFLINT_VERSION }}
+
+      - name: Initialize TFLint
+        run: tflint --init
+
+      - name: Run TFLint
+        run: tflint -f compact --recursive

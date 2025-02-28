@@ -1,0 +1,32 @@
+name: Dev and Prod branches PR checks
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - prod
+    paths:
+      - '*.tf'
+      - '*.tfvars'
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Target branch (for manual run)'
+        required: true
+        default: 'dev'
+
+jobs:
+  lint:
+    uses: ./.github/workflows/terraform/_lint.yml
+
+  security:
+    uses: ./.github/workflows/terraform/_sec.yml
+
+  plan:
+    needs: [validate, lint, security]
+    uses: ./.github/workflows/terraform/_plan.yml
+    permissions:
+      pull-requests: write
+    with:
+      environment: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || inputs.target_branch }}
+    secrets: inherit

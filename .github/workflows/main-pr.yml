@@ -1,0 +1,16 @@
+name: Main branch PR checks
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**/*.tf'
+      - 'modules/**'
+      - '.github/workflows/terraform/*.yml'
+
+jobs:
+  lint:
+    uses: ./.github/workflows/terraform/_lint.yml
+
+  security:
+    uses: ./.github/workflows/terraform/_sec.yml

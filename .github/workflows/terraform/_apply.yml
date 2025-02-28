@@ -1,0 +1,44 @@
+name: Terraform Apply
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  apply:
+    name: Apply
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+          cli_config_credentials_token: ${{ secrets.TFCLOUD_API_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init -input=false
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=environments/${{ inputs.environment }}.tfvars -out=tfplan
+
+      - name: Manual Approval for Production
+        if: inputs.environment == 'prod'
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.token }}
+          approvers: user1,user2,org-team1
+          minimum-approvals: 1
+          issue-title: "Deploy to Production"
+          issue-body: "Please approve or deny the deployment to production"
+          exclude-workflow-initiator-as-approver: false
+
+      - name: Terraform Apply
+        run: terraform apply tfplan
