@@ -18,14 +18,14 @@ on:
 
 jobs:
   lint:
-    uses: ./.github/workflows/terraform/_lint.yml
+    uses: ./.github/workflows/_lint.yml
 
   security:
-    uses: ./.github/workflows/terraform/_sec.yml
+    uses: ./.github/workflows/_sec.yml
 
   plan:
     needs: [validate, lint, security]
-    uses: ./.github/workflows/terraform/_plan.yml
+    uses: ./.github/workflows/_plan.yml
     permissions:
       pull-requests: write
     with:

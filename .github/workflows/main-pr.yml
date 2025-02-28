@@ -6,11 +6,11 @@ on:
     paths:
       - '**/*.tf'
       - 'modules/**'
-      - '.github/workflows/terraform/*.yml'
+      - '.github/workflows/*.yml'
 
 jobs:
   lint:
-    uses: ./.github/workflows/terraform/_lint.yml
+    uses: ./.github/workflows/_lint.yml
 
   security:
-    uses: ./.github/workflows/terraform/_sec.yml
+    uses: ./.github/workflows/_sec.yml

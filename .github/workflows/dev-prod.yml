@@ -17,7 +17,7 @@ on:
 
 jobs:
   apply:
-    uses: ./.github/workflows/terraform/_apply.yml
+    uses: ./.github/workflows/_apply.yml
     with:
       environment: ${{ github.event_name == 'pull_request' && github.ref_name || inputs.target_branch }}
     secrets: inherit
