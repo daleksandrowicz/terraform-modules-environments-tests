@@ -5,11 +5,13 @@ on:
     branches:
       - dev
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   plan:
     uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/dev-prod-pr.yml@feature/main
-    permissions:
-      pull-requests: write
     # with:
     #   environment: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || inputs.target_branch }}
     secrets: inherit
