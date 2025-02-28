@@ -2,11 +2,8 @@ name: Main branch PR checks
 
 on:
   pull_request:
-    branches: [ main ]
-    paths:
-      - '**/*.tf'
-      - 'modules/**'
-      - '.github/workflows/*.yml'
+    branches:
+      - main
 
 jobs:
   lint:
