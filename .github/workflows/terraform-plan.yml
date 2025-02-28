@@ -10,7 +10,7 @@ on:
 
 jobs:
   plan:
-    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/dev-prod-pr.yml@feature/workflow
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/dev-prod-pr.yml@feature/main
     permissions:
       pull-requests: write
     # with:
