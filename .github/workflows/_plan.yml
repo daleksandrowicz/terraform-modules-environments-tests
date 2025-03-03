@@ -6,6 +6,11 @@ on:
       environment:
         required: true
         type: string
+      tf_module_branch:
+        description: 'The branch where the Terraform module will be checked out from'
+        required: false
+        type: string
+        default: 'main'
 
 jobs:
   plan:
@@ -22,7 +27,7 @@ jobs:
       - name: Checkout main branch (for modules)
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ inputs.tf_module_branch }}
           path: infra-module
 
       - name: Setup Terraform
