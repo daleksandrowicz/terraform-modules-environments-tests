@@ -14,5 +14,6 @@ jobs:
     uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/dev-prod-pr.yml@feature/main
     with:
       tf_module_branch: 'feature/main'
+      pipeline_branch: 'feature/main'
     #   environment: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || inputs.target_branch }}
     secrets: inherit
