@@ -7,6 +7,7 @@ on:
         description: 'The branch where the Terraform module will be checked out from'
         required: false
         type: string
+        default: 'main'
 
 env:
   TFLINT_VERSION: "v0.55.1"

@@ -15,10 +15,16 @@ on:
         description: 'Target branch (for manual run)'
         required: true
         default: 'dev'
+      tf_module_branch:
+        description: 'The branch where the Terraform module will be checked out from'
+        required: true
+        type: string
 
 jobs:
   lint:
     uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_lint.yml@feature/main
+    with:
+      tf_module_branch: ${{ inputs.tf_module_branch }}
 
   security:
     uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_sec.yml@feature/main
@@ -31,4 +37,5 @@ jobs:
       pull-requests: write
     with:
       environment: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || inputs.target_branch }}
+      tf_module_branch: ${{ inputs.tf_module_branch }}
     secrets: inherit
