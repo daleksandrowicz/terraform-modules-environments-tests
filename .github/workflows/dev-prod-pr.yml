@@ -9,33 +9,34 @@ on:
   #     - '*.tf'
   #     - '*.tfvars'
   workflow_call:
-  workflow_dispatch:
     inputs:
-      target_branch:
-        description: 'Target branch (for manual run)'
-        required: true
-        default: 'dev'
       tf_module_branch:
         description: 'The branch where the Terraform module will be checked out from'
-        required: true
+        required: false
         type: string
+        default: 'main'
+      pipeline_branch:
+        description: 'The branch where the pipeline workflow will be reused from'
+        required: false
+        type: string
+        default: 'main'
 
 jobs:
   lint:
-    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_lint.yml@feature/main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_lint.yml@${{ inputs.pipeline_branch }}
     with:
       tf_module_branch: ${{ inputs.tf_module_branch }}
 
   security:
-    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_sec.yml@feature/main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_sec.yml@${{ inputs.pipeline_branch }}
 
   plan:
     needs: [lint, security]
-    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_plan.yml@feature/main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_plan.yml@${{ inputs.pipeline_branch }}
     permissions:
       contents: read
       pull-requests: write
     with:
-      environment: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || inputs.target_branch }}
+      environment: ${{ github.event.pull_request.base.ref }}
       tf_module_branch: ${{ inputs.tf_module_branch }}
     secrets: inherit

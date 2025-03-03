@@ -9,6 +9,17 @@ on:
   #     - '*.tf'
   #     - '*.tfvars'
   workflow_call:
+    inputs:
+      tf_module_branch:
+        description: 'The branch where the Terraform module will be checked out from'
+        required: false
+        type: string
+        default: 'main'
+      pipeline_branch:
+        description: 'The branch where the pipeline workflow will be reused from'
+        required: false
+        type: string
+        default: 'main'
   workflow_dispatch:
     inputs:
       target_branch:
@@ -18,7 +29,8 @@ on:
 
 jobs:
   apply:
-    uses: ./.github/workflows/_apply.yml
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_apply.yml@${{ inputs.pipeline_branch }}
     with:
-      environment: ${{ github.event_name == 'pull_request' && github.ref_name || inputs.target_branch }}
+      environment: ${{ github.event_name == 'workflow_dispatch' && inputs.target_branch || github.ref_name }}
+      tf_module_branch: ${{ inputs.tf_module_branch }}
     secrets: inherit

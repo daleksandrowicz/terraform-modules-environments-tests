@@ -6,6 +6,11 @@ on:
       environment:
         required: true
         type: string
+      tf_module_branch:
+        description: 'The branch where the Terraform module will be checked out from'
+        required: false
+        type: string
+        default: 'main'
 
 jobs:
   apply:
