@@ -2,6 +2,12 @@ name: Terraform Lint
 
 on:
   workflow_call:
+    inputs:
+      tf_module_branch:
+        description: 'The branch where the Terraform module will be checked out from'
+        required: false
+        type: string
+        default: 'main'
 
 env:
   TFLINT_VERSION: "v0.55.1"
@@ -14,13 +20,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout main branch (for modules)
+        if: github.event.pull_request.base.ref != 'main' && github.ref_name != 'main'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tf_module_branch }}
+          path: infra-module
+
       - name: Setup TFLint
         uses: terraform-linters/setup-tflint@v4
         with:
-          tflint_version: {{ env.TFLINT_VERSION }}
+          tflint_version: ${{ env.TFLINT_VERSION }}
 
       - name: Initialize TFLint
         run: tflint --init
 
       - name: Run TFLint
-        run: tflint -f compact --recursive
+        run: tflint -f compact

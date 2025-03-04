@@ -1,0 +1,12 @@
+name: Dev Branch Apply
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apply:
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_apply.yml@main
+    with:
+      environment: ${{ github.ref_name }}
+      tf_module_branch: 'main'
+    secrets: inherit

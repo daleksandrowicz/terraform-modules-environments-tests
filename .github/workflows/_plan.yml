@@ -6,6 +6,11 @@ on:
       environment:
         required: true
         type: string
+      tf_module_branch:
+        description: 'The branch where the Terraform module will be checked out from'
+        required: false
+        type: string
+        default: 'main'
 
 jobs:
   plan:
@@ -13,10 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     # environment: ${{ inputs.environment }}
     permissions:
+      contents: read
       pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Checkout main branch (for modules)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tf_module_branch }}
+          path: infra-module
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

@@ -1,5 +1,5 @@
 resource "mongodbatlas_cluster" "cluster-test" {
-  project_id = "M001"
+  project_id = var.project_id
   name       = var.cluster_name
 
   provider_name               = "TENANT"
