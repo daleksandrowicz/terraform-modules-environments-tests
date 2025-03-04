@@ -10,10 +10,19 @@ permissions:
   pull-requests: write
 
 jobs:
-  plan:
-    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/dev-prod-pr.yml@feature/main
+  lint:
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_lint.yml@feature/main
     with:
       tf_module_branch: 'feature/main'
-      pipeline_branch: 'feature/main'
-    #   environment: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || inputs.target_branch }}
+
+  security:
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_sec.yml@feature/main
+
+  plan:
+    needs: [lint, security]
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_plan.yml@feature/main
+    with:
+      environment: ${{ github.event.pull_request.base.ref }}
+      tf_module_branch: 'feature/main'
     secrets: inherit
+  
