@@ -42,7 +42,7 @@ jobs:
         run: terraform init -input=false
 
       - name: Terraform Plan
-        run: terraform plan -var-file=environments/${{ inputs.environment }}.tfvars -out=tfplan
+        run: terraform plan -out=tfplan
 
       - name: Manual Approval for Production
         if: inputs.environment == 'prod'
