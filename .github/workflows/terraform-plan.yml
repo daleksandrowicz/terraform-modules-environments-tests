@@ -11,18 +11,18 @@ permissions:
 
 jobs:
   lint:
-    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_lint.yml@feature/main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_lint.yml@main
     with:
-      tf_module_branch: 'feature/main'
+      tf_module_branch: 'main'
 
   security:
-    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_sec.yml@feature/main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_sec.yml@main
 
   plan:
     needs: [lint, security]
-    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_plan.yml@feature/main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_plan.yml@main
     with:
       environment: ${{ github.event.pull_request.base.ref }}
-      tf_module_branch: 'feature/main'
+      tf_module_branch: 'main'
     secrets: inherit
   
