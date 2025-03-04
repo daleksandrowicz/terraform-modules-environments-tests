@@ -1,4 +1,4 @@
-name: Dev and Prod branches PR checks
+name: Terraform
 
 on:
   pull_request:
