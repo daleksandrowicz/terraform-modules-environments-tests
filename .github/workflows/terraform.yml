@@ -4,9 +4,15 @@ on:
   pull_request:
     branches:
       - prod
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
   push:
     branches:
       - prod
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
 
 permissions:
   contents: read
