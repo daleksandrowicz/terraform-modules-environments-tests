@@ -21,6 +21,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout main branch (for modules)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tf_module_branch }}
+          path: infra-module
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
