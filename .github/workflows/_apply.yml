@@ -11,6 +11,10 @@ on:
         required: false
         type: string
         default: 'main'
+      approvers:
+        description: 'The list of approvers separated by comma required to apply the configuration to the Prod environment'
+        required: true
+        type: string
 
 jobs:
   apply:
@@ -45,7 +49,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.token }}
-          approvers: user1,user2,org-team1
+          approvers: ${{ inputs.approvers }}
           minimum-approvals: 1
           issue-title: "Deploy to Production"
           issue-body: "Please approve or deny the deployment to production"
