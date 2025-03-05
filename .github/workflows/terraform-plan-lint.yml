@@ -1,4 +1,4 @@
-name: Terraform Plan Lint - Dev
+name: Terraform Plan Lint
 
 on:
   pull_request:
