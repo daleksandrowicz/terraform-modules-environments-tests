@@ -1,0 +1,31 @@
+name: Terraform Plan Lint
+
+on:
+  pull_request:
+    branches:
+      - dev
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lint:
+    uses: ${{ github.repository }}/.github/workflows/_lint.yml@main
+    with:
+      tf_module_branch: 'main'
+
+  security:
+    uses: ${{ github.repository }}/.github/workflows/_sec.yml@main
+
+  plan:
+    needs: [lint, security]
+    uses: ${{ github.repository }}/.github/workflows/_plan.yml@main
+    with:
+      environment: ${{ github.event.pull_request.base.ref }}
+      tf_module_branch: 'main'
+    secrets: inherit
+  

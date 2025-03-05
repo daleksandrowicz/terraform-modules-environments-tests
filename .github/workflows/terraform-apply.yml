@@ -1,0 +1,18 @@
+name: Terraform Apply
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
+jobs:
+  apply:
+    uses: ${{ github.repository }}/.github/workflows/_apply.yml@main
+    with:
+      environment: ${{ github.ref_name }}
+      tf_module_branch: 'main'
+    secrets: inherit
