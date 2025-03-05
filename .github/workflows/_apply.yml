@@ -11,10 +11,6 @@ on:
         required: false
         type: string
         default: 'main'
-      approvers:
-        description: 'The list of approvers separated by comma required to apply the configuration to the Prod environment'
-        required: true
-        type: string
 
 jobs:
   apply:
@@ -42,17 +38,6 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init -input=false
-
-      - name: Manual Approval for Production
-        if: inputs.environment == 'prod'
-        uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.token }}
-          approvers: ${{ inputs.approvers }}
-          minimum-approvals: 1
-          issue-title: "Deploy to Production"
-          issue-body: "Please approve or deny the deployment to production"
-          exclude-workflow-initiator-as-approver: false
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
