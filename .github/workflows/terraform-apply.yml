@@ -11,7 +11,7 @@ on:
 
 jobs:
   apply:
-    uses: ${{ github.repository }}/.github/workflows/_apply.yml@main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_apply.yml@main
     with:
       environment: ${{ github.ref_name }}
       tf_module_branch: 'main'

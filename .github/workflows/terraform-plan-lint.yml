@@ -14,16 +14,16 @@ permissions:
 
 jobs:
   lint:
-    uses: ${{ github.repository }}/.github/workflows/_lint.yml@main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_lint.yml@main
     with:
       tf_module_branch: 'main'
 
   security:
-    uses: ${{ github.repository }}/.github/workflows/_sec.yml@main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_sec.yml@main
 
   plan:
     needs: [lint, security]
-    uses: ${{ github.repository }}/.github/workflows/_plan.yml@main
+    uses: daleksandrowicz/terraform-modules-environments-tests/.github/workflows/_plan.yml@main
     with:
       environment: ${{ github.event.pull_request.base.ref }}
       tf_module_branch: 'main'
