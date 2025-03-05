@@ -1,4 +1,4 @@
-name: Main Branch Lint
+name: Terraform Modules Lint
 
 on:
   pull_request:
