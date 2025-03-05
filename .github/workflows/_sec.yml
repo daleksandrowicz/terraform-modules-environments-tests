@@ -1,5 +1,3 @@
-name: Terraform Security
-
 on:
   workflow_call:
 
