@@ -1,4 +1,4 @@
-name: Main branch PR checks
+name: Main Branch Linters
 
 on:
   pull_request:
